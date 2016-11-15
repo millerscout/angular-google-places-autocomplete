@@ -47,6 +47,7 @@ Examples
 --------
 
 * [Basic](example/basic.html)
+* [Callback](example/callback.html)
 * [Options](example/options.html)
 * [Force selection](example/force-selection.html)
 * [Custom Places](example/custom-places.html)

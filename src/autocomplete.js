@@ -36,7 +36,8 @@ angular.module('google.places', [])
                     model: '=ngModel',
                     options: '=?',
                     forceSelection: '=?',
-                    customPlaces: '=?'
+                    customPlaces: '=?',
+                    onSelected: '&'
                 },
                 controller: ['$scope', function ($scope) {}],
                 link: function ($scope, element, attrs, controller) {
@@ -160,6 +161,8 @@ angular.module('google.places', [])
                                 $scope.model = prediction.place;
                                 $scope.$emit('g-places-autocomplete:select', prediction.place);
                                 $timeout(function () {
+                                    if(angular.isFunction($scope.onSelected))
+                                                $scope.onSelected();
                                     controller.$viewChangeListeners.forEach(function (fn) { fn(); });
                                 });
                             });
@@ -168,8 +171,11 @@ angular.module('google.places', [])
                                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                                     $scope.$apply(function () {
                                         $scope.model = place;
+                                        
                                         $scope.$emit('g-places-autocomplete:select', place);
                                         $timeout(function () {
+                                            if(angular.isFunction($scope.onSelected))
+                                                $scope.onSelected();
                                             controller.$viewChangeListeners.forEach(function (fn) { fn(); });
                                         });
                                     });
